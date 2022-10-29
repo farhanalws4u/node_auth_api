@@ -1,0 +1,68 @@
+password reset functionality =>
+    1. user sends a post request to a forgot password route only with his email. this wil then create a reset token and send that to the email address provided and the reset token is simple token not jwt.
+    
+    2. user then sends that token from his email along with a new password in order to update his password.
+
+
+SECURITY BEST PRACTICES : 
+
+    1. Always store password in db as encrypted form(bcrypt).
+    
+    2. Always send  reset token in encrypted form(sha 256).
+
+    3. BRUTE FORCE ATTACK : 
+
+        a). use bcrypt ( to make login requests slow).
+
+        b). implement rate limiting ( express-rate-limit).
+
+        c). implement maximum login attempts.
+
+    4. CROSS SITE SCRIPTING ATTACK ( XSS ) :
+
+        a). it allows an attacker to read local storage. So never store JWT in local storage. Store JWT in HTTP only cookies.
+
+        b). sanitize user input data.
+
+        c). set special HTTP headers ( helmet package ).
+
+    5. DENIAL-OF-SERVICE ( DOS ) ATTACK : 
+
+        a). implement rate limiting.
+
+        b). limit body payload ( in body-parser).
+
+        c). avoid evil regular expressions.      
+
+    6. NOSQL QUERY INJECTION ATTACK : 
+
+        a). user mongoose for mongoDb ( because of its schema type property which prevents this attack ).
+
+        b). sanitize user input data.
+
+    7. OTHER BEST PRACTICES TO IMPORVE AUTHENTICATION AND AUTHORIZATION.
+
+        => always use HTTPS.
+
+        => create random password reset tokens with expiry dates.
+
+        => deny access to JWT after password change.
+
+        => dont commit sensitive config data to git.
+
+        => dont send error details to client.
+
+        => prevent cross site request forgery ( csurf package ).
+
+        => require re-authentication before a high value action.
+
+        => implement a blacklist of untrusted JWT.
+
+        => confirm user email address after first creation of account or in signUp.
+
+        => keep userr logged in with refresh tokens.
+
+        => implement two factor authentication.
+
+        => prevent parameter pollution causing Uncaught exceptions.
+                  
